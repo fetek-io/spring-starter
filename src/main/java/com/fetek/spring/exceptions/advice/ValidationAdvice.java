@@ -1,4 +1,7 @@
-package com.fetek.spring.exceptions;
+package com.fetek.spring.exceptions.advice;
+
+import com.fetek.spring.exceptions.ErrorCode;
+import com.fetek.spring.exceptions.response.ValidationErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -8,7 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +26,10 @@ public class ValidationAdvice {
         final List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
         final List<String> errorList = fieldErrors.stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList());
 
-        final ValidationErrorResponse validationErrorResponse = new ValidationErrorResponse(HttpStatus.BAD_REQUEST, LocalDateTime.now(), errorList);
+        final ValidationErrorResponse validationErrorResponse = new ValidationErrorResponse(
+                ErrorCode.VALIDATION_FAILED.code,
+                errorList,
+                HttpStatus.BAD_REQUEST, ZonedDateTime.now());
 
         log.warn("Validation errors : {} , Parameters : {}", errorList, exception.getBindingResult().getTarget());
 

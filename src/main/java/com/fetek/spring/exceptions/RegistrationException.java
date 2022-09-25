@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class RegistrationException extends RuntimeException {
+public class RegistrationException extends BaseException {
+
+    private final ErrorCode errorCode = ErrorCode.INVALID_REGISTRATION;
 
     private final String errorMessage;
 
