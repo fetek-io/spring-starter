@@ -1,33 +1,35 @@
 package com.fetek.spring.model;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+//import javax.persistence.*;
 
 
 @Getter
 @Setter
-@Entity
+//@Entity
+//@Table(name = "USERS")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "USERS")
+@Document(collection = "users")
 public class User {
 
+//    @Id
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String name;
 
-    @Column(unique = true)
     private String username;
 
     private String password;
 
     private String email;
 
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
 }
