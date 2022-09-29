@@ -1,20 +1,16 @@
 package com.fetek.spring.configuration;
 
+
+import io.swagger.v3.oas.models.ExternalDocumentation;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.ParameterBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.schema.ModelRef;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.service.Parameter;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +18,6 @@ import java.util.List;
 import static com.fetek.spring.utils.ProjectConstants.PROJECT_BASE_PACKAGE;
 
 @Configuration
-@EnableSwagger2
 @PropertySource(value = "classpath:swagger-information.properties")
 public class SwaggerConfiguration {
 
@@ -51,40 +46,16 @@ public class SwaggerConfiguration {
     private String contactEmail;
 
     @Bean
-    public Docket api() {
-
-        return new Docket(DocumentationType.SWAGGER_2)
-                .globalOperationParameters(getHeaderParams())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage(PROJECT_BASE_PACKAGE))
-                .paths(PathSelectors.regex("/.*"))
-                .build()
-                .apiInfo(getApiInformation());
-    }
-
-    private ApiInfo getApiInformation() {
-
-        final Contact contact = new Contact(contactName, contactUrl, contactEmail);
-
-        return new ApiInfoBuilder()
-                .title(appName)
-                .version(appVersion)
-                .description(appDescription)
-                .license(licence).licenseUrl(licenceUrl)
-                .contact(contact)
-                .build();
-    }
-
-    private List<Parameter> getHeaderParams() {
-
-        final Parameter parameter = new ParameterBuilder()
-                .required(false)
-                .name("Authorization")
-                .parameterType("header")
-                .modelRef(new ModelRef("string"))
-                .build();
-
-        return Collections.singletonList(parameter);
+    public OpenAPI springShopOpenAPI() {
+        return new OpenAPI()
+                .info(new Info().title(appName)
+                        .description(appDescription)
+                        .version(appVersion)
+                        .contact(new Contact().name(contactName).url(contactUrl).email(contactEmail))
+                        .license(new License().name(licence).url(licenceUrl)))
+                .externalDocs(new ExternalDocumentation()
+                        .description(appDescription)
+                        .url(contactUrl));
     }
 
 }
