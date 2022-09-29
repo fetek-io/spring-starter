@@ -44,19 +44,19 @@
         <appender-ref ref="Console" />
     </root>
 
-    <logger name="org.hibernate" level="info">
-        <appender-ref ref="RollingFile" />
-        <appender-ref ref="Console" />
-    </logger>
+<!--    <logger name="org.hibernate" level="info">-->
+<!--        <appender-ref ref="RollingFile" />-->
+<!--        <appender-ref ref="Console" />-->
+<!--    </logger>-->
 
-    <logger name="org.springframework.web" level="info">
-        <appender-ref ref="RollingFile" />
-        <appender-ref ref="Console" />
-    </logger>
+<!--    <logger name="org.springframework.web" level="info">-->
+<!--        <appender-ref ref="RollingFile" />-->
+<!--        <appender-ref ref="Console" />-->
+<!--    </logger>-->
 
-    <logger name="com.fetek.spring" level="info">
-        <appender-ref ref="RollingFile" />
-        <appender-ref ref="Console" />
-    </logger>
+<!--    <logger name="com.fetek.spring" level="info">-->
+<!--        <appender-ref ref="RollingFile" />-->
+<!--        <appender-ref ref="Console" />-->
+<!--    </logger>-->
 
 </configuration>
